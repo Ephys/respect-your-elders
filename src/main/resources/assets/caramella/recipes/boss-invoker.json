@@ -1,20 +1,19 @@
 {
-  "type": "minecraft:crafting_shapeless",
-  "ingredients": [
-    {
+  "type": "minecraft:crafting_shaped",
+  "pattern":
+  [
+    " s ",
+    "scs",
+    " s "
+  ],
+  "key": {
+    "c": {
       "item": "minecraft:prismarine_crystals"
     },
-    {
-      "item": "minecraft:brown_mushroom"
-    },
-    {
-      "item": "minecraft:fish",
-      "data": 2
-    },
-    {
-      "item": "minecraft:bowl"
+    "s": {
+      "item": "minecraft:prismarine_shard"
     }
-  ],
+  },
   "result": {
     "item": "caramella:boss-invoker"
   }

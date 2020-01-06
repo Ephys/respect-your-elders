@@ -79,10 +79,11 @@ public class ItemBossInvoker extends CaramellaItem {
 //      worldIn.getEntitiesWithinAABB(EntityElderGuardian.class, monument.getBoundingBox());
     }
 
+    // TODO: Used outside: you feel drawn to explore the sea
     // TODO: consume item
     //   Play Elder Guardian ambiant sounds
-    //   Particles
     //   Summon
+    //   Teleport player to EntryRoom.class
     // TODO: no elder if there is already one?
     // TODO: no elder if no water
     //   Spawn elder in all 3 rooms
