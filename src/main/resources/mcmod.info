@@ -1,0 +1,16 @@
+[
+{
+  "modid": "caramella",
+  "name": "Caramella",
+  "description": "Vanilla+ style mod for CandyBeast.",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["ephys"],
+  "credits": "",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
