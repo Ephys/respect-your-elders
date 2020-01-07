@@ -1,1 +1,5 @@
 item.respect-your-elders:eldercrystal.name=Elder Crystal
+
+commands.respect-your-elders:genstruct.usage=/genstruct Mansion
+commands.respect-your-elders:genstruct.overworld=This command only works in the overworld
+commands.respect-your-elders:genstruct.unsupported-structure=This structure is not supported

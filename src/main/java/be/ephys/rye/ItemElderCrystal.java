@@ -173,33 +173,8 @@ public class ItemElderCrystal extends RyeItem {
       return null;
     }
 
-    // get "getStructureAt" private method
-    // public net.minecraft.world.gen.structure.MapGenStructure func_175797_c(Lnet/minecraft/util/math/BlockPos;)Lnet/minecraft/world/gen/structure/StructureStart; #getStructureAt
-    Method getStructureAt = ObfuscationReflectionHelper.findMethod(
-      // owner class
-      MapGenStructure.class,
-
-      // srg method name
-      "func_175797_c",
-
-      // return type
-      StructureStart.class,
-
-      // input param type
-      BlockPos.class
-    );
-
-    getStructureAt.setAccessible(true);
-    StructureStart structureStart;
-    try {
-      structureStart = (StructureStart) getStructureAt.invoke(oceanMonumentGenerator, playerPosition);
-
-      if (!(structureStart instanceof StartMonument)) {
-        return null;
-      }
-    } catch (IllegalAccessException | InvocationTargetException e) {
-      e.printStackTrace();
-
+    StructureStart structureStart = StructureHelper.getStructureAt(oceanMonumentGenerator, playerPosition);
+    if (!(structureStart instanceof StructureOceanMonument.StartMonument)) {
       return null;
     }
 
