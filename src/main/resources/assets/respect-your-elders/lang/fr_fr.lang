@@ -1,4 +1,6 @@
 item.respect-your-elders:eldercrystal.name=Ancien Crystal
+item.respect-your-elders:eldercrystal.outside-monument=Vous ressentez le besoin d'explorer les profondeurs bleues
+item.respect-your-elders:eldercrystal.too-many-elders=Ce monument est déjà habité
 
 commands.respect-your-elders:genstruct.usage=/genstruct Mansion
 commands.respect-your-elders:genstruct.overworld=Cette commande ne fonctionne que dans le monde de surface
