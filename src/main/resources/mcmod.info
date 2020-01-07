@@ -1,7 +1,7 @@
 [{
   "modid": "respect-your-elders",
   "name": "Respect Your Elders",
-  "description": "Vanilla+ style mod for CandyBeast.",
+  "description": "Respawn the elder guardian & Evoker bosses.",
   "version": "${version}",
   "mcversion": "${mcversion}",
   "url": "",
