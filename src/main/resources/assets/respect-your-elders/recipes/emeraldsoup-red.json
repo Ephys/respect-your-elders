@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "minecraft:fish",
+      "data": 2
+    },
+    {
+      "item": "minecraft:bowl"
+    },
+    {
+      "item": "minecraft:emerald"
+    },
+    {
+      "item": "minecraft:red_mushroom"
+    }
+  ],
+  "result": {
+    "item": "respect-your-elders:emeraldsoup"
+  }
+}

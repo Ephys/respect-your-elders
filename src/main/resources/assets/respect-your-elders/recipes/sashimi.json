@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "minecraft:fish",
+      "data": 2
+    },
+    {
+      "item": "minecraft:bowl"
+    },
+    {
+      "item": "minecraft:wheat_seeds"
+    },
+    {
+      "type": "forge:ore_dict",
+      "ore": "cropCarrot"
+    }
+  ,
+    {
+      "type": "forge:ore_dict",
+      "ore": "cropPotato"
+    }
+  ],
+  "result": {
+    "item": "respect-your-elders:sashimi"
+  }
+}

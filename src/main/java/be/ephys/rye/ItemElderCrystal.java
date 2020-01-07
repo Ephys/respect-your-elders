@@ -1,12 +1,10 @@
 package be.ephys.rye;
 
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.monster.EntityElderGuardian;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
 import net.minecraft.init.SoundEvents;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.*;
@@ -19,11 +17,7 @@ import net.minecraft.world.gen.ChunkGeneratorOverworld;
 import net.minecraft.world.gen.IChunkGenerator;
 import net.minecraft.world.gen.structure.*;
 import net.minecraft.world.gen.structure.StructureOceanMonument.StartMonument;
-import net.minecraftforge.client.model.ModelLoader;
-import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -40,15 +34,6 @@ public class ItemElderCrystal extends RyeItem {
 
     setMaxStackSize(8);
     setCreativeTab(CreativeTabs.MISC);
-  }
-
-  void register(RegistryEvent.Register<Item> event) {
-    event.getRegistry().register(this);
-  }
-
-  @SideOnly(Side.CLIENT)
-  void registerModel() {
-    ModelLoader.setCustomModelResourceLocation(this, 0, new ModelResourceLocation(getRegistryName(), "inventory"));
   }
 
   /**

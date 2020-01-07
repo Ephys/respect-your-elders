@@ -2,6 +2,11 @@ item.respect-your-elders:eldercrystal.name=Elder Crystal
 item.respect-your-elders:eldercrystal.outside-monument=You feel the urge to explore the sea
 item.respect-your-elders:eldercrystal.too-many-elders=This monument is already inhabited
 
+item.respect-your-elders:emeraldsoup.name=Emerald Soup
+item.respect-your-elders:emeraldsoup.tooltip=Abigail's special
+
+item.respect-your-elders:sashimi.name=Sashimi
+
 commands.respect-your-elders:genstruct.usage=/genstruct Mansion
 commands.respect-your-elders:genstruct.overworld=This command only works in the overworld
 commands.respect-your-elders:genstruct.unsupported-structure=This structure is not supported
