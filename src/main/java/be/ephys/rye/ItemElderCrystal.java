@@ -1,4 +1,4 @@
-package be.ephys.caramella;
+package be.ephys.rye;
 
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
@@ -29,10 +29,10 @@ import java.util.List;
 
 import static net.minecraft.world.gen.structure.StructureOceanMonumentPieces.*;
 
-public class ItemBossInvoker extends CaramellaItem {
+public class ItemElderCrystal extends RyeItem {
 
-  public ItemBossInvoker() {
-    super("boss-invoker");
+  public ItemElderCrystal() {
+    super("eldercrystal");
 
     setMaxStackSize(8);
     setCreativeTab(CreativeTabs.MISC);

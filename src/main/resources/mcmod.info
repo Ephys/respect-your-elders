@@ -1,16 +1,14 @@
-[
-{
-  "modid": "caramella",
-  "name": "Caramella",
+[{
+  "modid": "respect-your-elders",
+  "name": "Respect Your Elders",
   "description": "Vanilla+ style mod for CandyBeast.",
   "version": "${version}",
   "mcversion": "${mcversion}",
   "url": "",
   "updateUrl": "",
-  "authorList": ["ephys"],
+  "authorList": ["ephys", "flandersaustin"],
   "credits": "",
   "logoFile": "",
   "screenshots": [],
   "dependencies": []
-}
-]
+}]

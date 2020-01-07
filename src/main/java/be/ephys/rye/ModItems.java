@@ -1,17 +1,17 @@
-package be.ephys.caramella;
+package be.ephys.rye;
 
 import net.minecraft.item.Item;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-@Mod.EventBusSubscriber(modid = CaramellaMod.MODID)
+@Mod.EventBusSubscriber(modid = RyeMod.MODID)
 public class ModItems {
-  public static ItemBossInvoker BOSS_INVOKER;
+  public static ItemElderCrystal ELDER_CRYSTAL;
 
   @SubscribeEvent
   public static void registerItems(RegistryEvent.Register<Item> event) {
-    BOSS_INVOKER = new ItemBossInvoker();
-    BOSS_INVOKER.register(event);
+    ELDER_CRYSTAL = new ItemElderCrystal();
+    ELDER_CRYSTAL.register(event);
   }
 }
