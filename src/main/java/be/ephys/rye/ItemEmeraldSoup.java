@@ -7,6 +7,7 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EnumCreatureType;
+import net.minecraft.entity.monster.AbstractIllager;
 import net.minecraft.entity.monster.EntityEvoker;
 import net.minecraft.entity.monster.EntityVindicator;
 import net.minecraft.entity.player.EntityPlayer;
@@ -18,6 +19,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
+import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.biome.Biome;
@@ -26,6 +28,7 @@ import net.minecraft.world.gen.structure.WoodlandMansion;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -36,9 +39,6 @@ import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-// TODO texture
-// TODO: give back bowl
 
 public class ItemEmeraldSoup extends ItemFood {
 
@@ -91,6 +91,8 @@ public class ItemEmeraldSoup extends ItemFood {
    * 4 from [0, 10] becomes 140 for [100, 200]
    */
   public static double map(double x, double in_min, double in_max, double out_min, double out_max) {
+    // https://stackoverflow.com/questions/7505991/arduino-map-equivalent-function-in-java
+
     return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
   }
 
@@ -117,13 +119,57 @@ public class ItemEmeraldSoup extends ItemFood {
     MinecraftForge.EVENT_BUS.register(this);
   }
 
-  // https://stackoverflow.com/questions/7505991/arduino-map-equivalent-function-in-java
+  @SubscribeEvent
+  public void onMaySpawn(LivingSpawnEvent.CheckSpawn event) {
+    if (event.isSpawner()) {
+      return;
+    }
+
+    World world = event.getWorld();
+    if (world.getDifficulty() == EnumDifficulty.PEACEFUL) {
+      return;
+    }
+
+    EntityLivingBase creature = event.getEntityLiving();
+    if (!(creature instanceof AbstractIllager)) {
+      return;
+    }
+
+    AbstractIllager mob = (AbstractIllager) creature;
+    if (!mob.isNotColliding()) {
+      return;
+    }
+
+    BlockPos mobPos = new BlockPos(event.getX(), event.getY(), event.getZ());
+    if (!world.getBlockState(mobPos.down()).canEntitySpawn(mob)) {
+      return;
+    }
+
+    // if there is any evoker within 16 blocks horizontally, skip this evoker
+    if (mob instanceof EntityEvoker) {
+      AxisAlignedBB bb = new AxisAlignedBB(mobPos).grow(18, 2, 18);
+      bb = bb.setMaxY(bb.maxY + 4);
+
+      List<EntityEvoker> existingEvokers = world.getEntitiesWithinAABB(EntityEvoker.class, bb);
+      if (existingEvokers.size() > 1) {
+        return;
+      }
+    }
+
+    // allow illagers to spawn even if the mansion is lit
+    // if a player has the Illager_Craze effect
+    // TODO: Check for players with illager_craze
+
+    event.setResult(Event.Result.ALLOW);
+  }
 
   @SubscribeEvent
   public void onPotentialSpawn(WorldEvent.PotentialSpawns event) {
     if (event.getType() != EnumCreatureType.MONSTER) {
       return;
     }
+
+    // TODO: only run this script if a player has the potion effect in the world
 
     /*
      * If a player inside a Mansion has the Illager Craze potion effect active,
@@ -145,6 +191,12 @@ public class ItemEmeraldSoup extends ItemFood {
 //    StructureStart mansion = StructureHelper.getStructureAt(mansionGenerator, spawnPos);
     StructureStart mansion = StructureHelper.getIncompleteStructureAt(mansionGenerator, world, new ChunkPos(spawnPos));
     if (mansion == null) {
+      return;
+    }
+
+    // no mobs on the roof of the mansion, at all
+    if (world.canSeeSky(spawnPos)) {
+      event.setCanceled(true);
       return;
     }
 
@@ -170,11 +222,7 @@ public class ItemEmeraldSoup extends ItemFood {
 
     List<EntityEvoker> evokers = world.getEntitiesWithinAABB(EntityEvoker.class, mansionBB);
     // map number of people to the spawn chance using a logarithmic scale (eg. 1 = 30, 2 = 45, etc...)
-    int baseSpawnChance = (int) Math.round(mapLog10(crazyPeople, 1, 5, 30, 70));
-
-    System.out.println(crazyPeople + " crazies " + evokers.size() + " evokers");
-
-//    event.getList().clear();
+    int baseSpawnChance = (int) Math.round(mapLog10(crazyPeople, 1, 5, 45, 85));
 
     if (evokers.size() < 4) {
       // int weight, int groupCountMin, int groupCountMax

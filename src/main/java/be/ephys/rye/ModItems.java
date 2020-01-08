@@ -33,8 +33,11 @@ public class ModItems {
   @SubscribeEvent
   public static void registerPotion(RegistryEvent.Register<Potion> event) {
     // TODO color
-    POTION_ILLAGER_CRAZE = new RyePotion("illager_craze", true, 0xff0000, RyePotion.INDEX_ILLAGER_CRAZE);
-    EMERALD_SOUP.setPotionEffect(new PotionEffect(ModItems.POTION_ILLAGER_CRAZE, 12000 /* 600s */), 1F);
+    POTION_ILLAGER_CRAZE = new RyePotion("illager_craze", true, 0xff0000, 0, 0);
+    event.getRegistry().register(POTION_ILLAGER_CRAZE);
+
+    /* 600s */
+    EMERALD_SOUP.setPotionEffect(new PotionEffect(ModItems.POTION_ILLAGER_CRAZE, 6000, 0), 1F);
   }
 
   @SideOnly(Side.CLIENT)

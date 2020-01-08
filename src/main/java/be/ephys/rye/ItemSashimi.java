@@ -16,7 +16,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class ItemSashimi extends ItemFood {
 
   public ItemSashimi() {
-    super(9, 1.4f, false);
+    super(9, 0.6f, false);
 
     String name = "sashimi";
 
