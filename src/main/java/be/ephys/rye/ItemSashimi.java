@@ -2,8 +2,12 @@ package be.ephys.rye;
 
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemFood;
+import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.relauncher.Side;
@@ -30,5 +34,11 @@ public class ItemSashimi extends ItemFood {
   @SideOnly(Side.CLIENT)
   void registerModel() {
     ModelLoader.setCustomModelResourceLocation(this, 0, new ModelResourceLocation(getRegistryName(), "inventory"));
+  }
+
+  @Override
+  public ItemStack onItemUseFinish(ItemStack stack, World worldIn, EntityLivingBase entityLiving) {
+    super.onItemUseFinish(stack, worldIn, entityLiving);
+    return new ItemStack(Items.BOWL);
   }
 }

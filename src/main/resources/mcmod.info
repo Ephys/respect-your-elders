@@ -6,8 +6,11 @@
   "mcversion": "${mcversion}",
   "url": "",
   "updateUrl": "",
-  "authorList": ["ephys", "flandersaustin"],
-  "credits": "",
+  "authorList": [
+    "ephys",
+    "flandersaustin"
+  ],
+  "credits": "Quark has been pretty great to discovery how to do most things",
   "logoFile": "",
   "screenshots": [],
   "dependencies": []

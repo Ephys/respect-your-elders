@@ -8,11 +8,8 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.WorldServer;
-import net.minecraft.world.gen.ChunkGeneratorOverworld;
-import net.minecraft.world.gen.IChunkGenerator;
 import net.minecraft.world.gen.structure.StructureStart;
 import net.minecraft.world.gen.structure.WoodlandMansion;
-import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 
 import javax.annotation.Nullable;
 import java.util.Collections;
@@ -54,19 +51,12 @@ public class GenerateStructureCommand extends CommandBase {
   }
 
   private void generateMansion(ICommandSender sender) throws CommandException {
-    // TODO: generate all chunks at once
     WorldServer world = (WorldServer) sender.getEntityWorld();
+    WoodlandMansion woodlandMansionGenerator = StructureHelper.getMansionGenerator(world);
 
-    IChunkGenerator chunkGenerator = world.getChunkProvider().chunkGenerator;
-    if (!(chunkGenerator instanceof ChunkGeneratorOverworld)) {
+    if (woodlandMansionGenerator == null) {
       throw new WrongUsageException(COMMAND_LOCALE_KEY + ".overworld");
     }
-
-    ChunkGeneratorOverworld overworldGenerator = (ChunkGeneratorOverworld) chunkGenerator;
-
-    // public net.minecraft.world.gen.ChunkGeneratorOverworld field_191060_C #woodlandMansionGenerator
-    // get "woodlandMansionGenerator" private field
-    WoodlandMansion woodlandMansionGenerator = ObfuscationReflectionHelper.getPrivateValue(ChunkGeneratorOverworld.class, overworldGenerator, "field_191060_C");
 
     // replicate what's done in ChunkGeneratorOverworld.populate
     // generate a new seeded RNG for this specific structure
@@ -81,9 +71,6 @@ public class GenerateStructureCommand extends CommandBase {
     long k = rand.nextLong() / 2L * 2L + 1L;
     long l = rand.nextLong() / 2L * 2L + 1L;
     rand.setSeed((long)chunkX * k + (long)chunkZ * l ^ worldSeed);
-
-    int i = (chunkX << 4) + 8;
-    int j = (chunkZ << 4) + 8;
 
     // if a Mansion already exists there, reset it or continue building it
     StructureStart mansionStart = StructureHelper.getIncompleteStructureAt(woodlandMansionGenerator, world, chunkPos);

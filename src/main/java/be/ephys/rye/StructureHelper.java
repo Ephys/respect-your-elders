@@ -1,12 +1,14 @@
 package be.ephys.rye;
 
 import it.unimi.dsi.fastutil.longs.Long2ObjectMap;
-import it.unimi.dsi.fastutil.objects.ObjectIterator;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
+import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
 import net.minecraft.world.gen.ChunkGeneratorOverworld;
+import net.minecraft.world.gen.IChunkGenerator;
 import net.minecraft.world.gen.structure.*;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 
@@ -54,6 +56,18 @@ public final class StructureHelper {
     return ObfuscationReflectionHelper.getPrivateValue(MapGenStructure.class, structure, "field_75053_d");
   }
 
+  public static synchronized StructureStart getIncompleteStructureAt(MapGenStructure structure, World world, BlockPos pos) {
+    StructureHelper.initializeStructureData(structure, world);
+
+    for (StructureStart structurestart : getStructureMap(structure).values()) {
+      if (structurestart.getBoundingBox().isVecInside(new Vec3i(pos.getX(), pos.getY(), pos.getZ()))) {
+        return structurestart;
+      }
+    }
+
+    return null;
+  }
+
   public static synchronized StructureStart getIncompleteStructureAt(MapGenStructure structure, World world, ChunkPos chunkPos) {
     StructureHelper.initializeStructureData(structure, world);
 
@@ -66,7 +80,6 @@ public final class StructureHelper {
       }
     }
 
-    System.out.println("no");
     return null;
   }
 
@@ -122,6 +135,22 @@ public final class StructureHelper {
     } catch (IllegalAccessException | InvocationTargetException e) {
       throw new RuntimeException(e);
     }
+  }
+
+  public static WoodlandMansion getMansionGenerator(WorldServer world) {
+    IChunkGenerator chunkGenerator = world.getChunkProvider().chunkGenerator;
+    if (!(chunkGenerator instanceof ChunkGeneratorOverworld)) {
+      return null;
+    }
+
+    ChunkGeneratorOverworld overworldGenerator = (ChunkGeneratorOverworld) chunkGenerator;
+    return StructureHelper.getMansionGenerator(overworldGenerator);
+  }
+
+  public static WoodlandMansion getMansionGenerator(ChunkGeneratorOverworld overworldGenerator) {
+    // public net.minecraft.world.gen.ChunkGeneratorOverworld field_191060_C #woodlandMansionGenerator
+    // get "woodlandMansionGenerator" private field
+    return ObfuscationReflectionHelper.getPrivateValue(ChunkGeneratorOverworld.class, overworldGenerator, "field_191060_C");
   }
 
   public static WoodlandMansion.Start getMansionStructureStart(WoodlandMansion mansion, int chunkX, int chunkZ) {
